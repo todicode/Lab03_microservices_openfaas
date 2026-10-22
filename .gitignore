@@ -1,0 +1,15 @@
+.tools/
+template/
+build/
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.openfaas/
+evidence/*.log
+.generated/
+.pytest_cache/
+.env.*
+!.env.example
+node_modules/
+
