@@ -1,0 +1,333 @@
+{
+  "info": {
+    "name": "Lab03 — Python Microservices / OpenFaaS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Run Product create before detail/order requests. Use a new idempotency_key for a new order."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8082"
+    },
+    {
+      "key": "product_id",
+      "value": "10000000-0000-4000-8000-000000000001"
+    },
+    {
+      "key": "order_id",
+      "value": ""
+    },
+    {
+      "key": "idempotency_key",
+      "value": ""
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get('idempotency_key')) { pm.collectionVariables.set('idempotency_key', pm.variables.replaceIn('{{$guid}}')); }"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Product: list",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/function/product-service/products",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "product-service",
+            "products"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Product: create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/function/product-service/products",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "product-service",
+            "products"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sổ demo Postman\",\n  \"description\": \"Dữ liệu giả lập\",\n  \"category\": \"notebooks\",\n  \"price_vnd\": 50000,\n  \"active\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Created', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('product_id', pm.response.json().product.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product: detail",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/function/product-service/products/{{product_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "product-service",
+            "products",
+            "{{product_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Product: update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/function/product-service/products/{{product_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "product-service",
+            "products",
+            "{{product_id}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sổ demo Postman\",\n  \"description\": \"Đã cập nhật\",\n  \"category\": \"notebooks\",\n  \"price_vnd\": 60000,\n  \"active\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Calculator: calculate",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/function/total-calculator/calculate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "total-calculator",
+            "calculate"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"unit_price_vnd\": 129000,\n      \"quantity\": 2\n    },\n    {\n      \"unit_price_vnd\": 35000,\n      \"quantity\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Exact total', () => pm.expect(pm.response.json().total_vnd).to.eql(293000));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order: create (same key = replay)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{idempotency_key}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/function/order-service/orders",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "order-service",
+            "orders"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Khách demo\",\n  \"phone\": \"0900000000\",\n  \"address\": \"Địa chỉ giả lập cho bài lab\",\n  \"note\": \"\",\n  \"items\": [\n    {\n      \"product_id\": \"{{product_id}}\",\n      \"quantity\": 2\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Created or replayed', () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+              "pm.collectionVariables.set('order_id', pm.response.json().order.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order: list",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/function/order-service/orders",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "order-service",
+            "orders"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Order: detail",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/function/order-service/orders/{{order_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "order-service",
+            "orders",
+            "{{order_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Order: cancel",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/function/order-service/orders/{{order_id}}/cancel",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "order-service",
+            "orders",
+            "{{order_id}}",
+            "cancel"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Product: deactivate",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/function/product-service/products/{{product_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "function",
+            "product-service",
+            "products",
+            "{{product_id}}"
+          ]
+        }
+      }
+    }
+  ]
+}
