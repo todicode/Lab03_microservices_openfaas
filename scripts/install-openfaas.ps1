@@ -26,7 +26,7 @@ kubectl --context $Profile -n lab03-data create configmap postgres-init --from-f
 Check
 kubectl --context $Profile apply -f infra/kubernetes/postgres.yml
 Check
-kubectl --context $Profile -n lab03-web create configmap frontend-assets --from-file=frontend/index.html --from-file=frontend/styles.css --from-file=frontend/app.js --dry-run=client -o yaml | kubectl --context $Profile apply -f -
+kubectl --context $Profile -n lab03-web create configmap frontend-assets --from-file=frontend/index.html --from-file=frontend/styles.css --from-file=frontend/app.js --from-file=frontend/fonts/noto-serif-italic.ttf --from-file=frontend/fonts/OFL.txt --dry-run=client -o yaml | kubectl --context $Profile apply --server-side --force-conflicts --field-manager=lab03-frontend -f -
 Check
 kubectl --context $Profile -n lab03-web create configmap frontend-nginx --from-file=default.conf=infra/nginx/kubernetes.conf --dry-run=client -o yaml | kubectl --context $Profile apply -f -
 Check

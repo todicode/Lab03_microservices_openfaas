@@ -38,6 +38,17 @@ spec:
         - name: assets
           configMap:
             name: frontend-assets
+            items:
+              - key: index.html
+                path: index.html
+              - key: styles.css
+                path: styles.css
+              - key: app.js
+                path: app.js
+              - key: noto-serif-italic.ttf
+                path: fonts/noto-serif-italic.ttf
+              - key: OFL.txt
+                path: fonts/OFL.txt
         - name: nginx
           configMap:
             name: frontend-nginx
