@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#254e3b"><title>Paperlane — Một góc nhỏ, nhiều cảm hứng</title>
-  <link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script>
+  <link rel="stylesheet" href="/styles.css?v=20261022-2"><script src="/app.js" defer></script>
 </head>
 <body>
 <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -54,13 +54,11 @@
  <section id="orders-view" class="view inner-page" hidden>
   <p class="eyebrow">YOUR LITTLE COLLECTION</p><div class="section-heading"><h1>Đơn hàng<span>.</span></h1><button class="secondary" id="refresh-orders">Làm mới</button></div>
   <p class="page-intro">Xem chi tiết và theo dõi những món đồ bạn đã chọn.</p>
-  <p class="demo-note">Bản thực hành local: danh sách đơn hàng dùng chung cho phiên demo.</p>
   <div id="orders-content" aria-live="polite"></div>
  </section>
  <section id="manage-view" class="view inner-page" hidden>
   <p class="eyebrow">THE STORE DESK</p><div class="section-heading"><h1>Quản lý sản phẩm<span>.</span></h1><button class="primary" id="new-product"><svg><use href="#i-plus"/></svg> Thêm sản phẩm</button></div>
   <p class="page-intro">Chăm chút bộ sưu tập: thêm món mới, sửa thông tin hoặc ngừng bán.</p>
-  <p class="demo-note">Khu vực quản lý của bản demo local, chưa có đăng nhập/phân quyền.</p>
   <div id="manage-content" aria-live="polite"></div>
  </section>
 </main>
@@ -76,7 +74,7 @@
   <div class="form-row"><label>Số điện thoại<input name="phone" type="tel" autocomplete="tel" required maxlength="30"></label><label>Hình thức thanh toán<input value="Khi nhận hàng (COD)" disabled></label></div>
   <label>Địa chỉ nhận hàng<textarea name="address" autocomplete="street-address" required maxlength="500" rows="2"></textarea></label>
   <label>Ghi chú <span class="muted">(không bắt buộc)</span><textarea name="note" maxlength="500" rows="2"></textarea></label>
-  <p class="form-hint">Tổng tiền cuối cùng được xác nhận theo giá hiện tại khi đặt hàng. Bản demo chưa tính phí vận chuyển.</p>
+  <p class="form-hint">Tổng tiền được xác nhận theo giá hiện tại khi đặt hàng, chưa bao gồm phí vận chuyển.</p>
   <p id="checkout-error" class="form-error" role="alert" hidden></p>
   <button class="primary full-width" id="place-order" type="submit">Đặt hàng <svg><use href="#i-arrow"/></svg></button>
  </form>
