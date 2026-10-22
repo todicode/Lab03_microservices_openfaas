@@ -1,0 +1,6 @@
+openfaasPro: false
+basic_auth: true
+generateBasicAuth: true
+serviceType: ClusterIP
+functionNamespace: openfaas-fn
+

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: lab03-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab03-frontend
+  template:
+    metadata:
+      labels:
+        app: lab03-frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.28-alpine
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          volumeMounts:
+            - name: assets
+              mountPath: /usr/share/nginx/html
+            - name: nginx
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: assets
+          configMap:
+            name: frontend-assets
+        - name: nginx
+          configMap:
+            name: frontend-nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: lab03-web
+spec:
+  selector:
+    app: lab03-frontend
+  ports:
+    - port: 8080
