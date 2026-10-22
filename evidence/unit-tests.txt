@@ -1,0 +1,20 @@
+test_exact_integer_money (test_calculator.CalculatorTests.test_exact_integer_money) ... ok
+test_free_product (test_calculator.CalculatorTests.test_free_product) ... ok
+test_http_contract (test_calculator.CalculatorTests.test_http_contract) ... ok
+test_invalid_items (test_calculator.CalculatorTests.test_invalid_items) ... ok
+test_bad_json (test_calculator.InputTests.test_bad_json) ... ok
+test_json_object_required (test_calculator.InputTests.test_json_object_required) ... ok
+test_media_type_and_body_limit (test_calculator.InputTests.test_media_type_and_body_limit) ... ok
+test_client_price_not_used (test_order.OrderTests.test_client_price_not_used) ... ok
+test_idempotency_validation (test_order.OrderTests.test_idempotency_validation) ... ok
+test_merge_duplicate_lines (test_order.OrderTests.test_merge_duplicate_lines) ... ok
+test_reject_duplicate_quantity_overflow (test_order.OrderTests.test_reject_duplicate_quantity_overflow) ... ok
+test_replay_conflict (test_order.OrderTests.test_replay_conflict) ... ok
+test_upstream_failures (test_order.OrderTests.test_upstream_failures) ... ok
+test_invalid_uuid (test_product.ProductTests.test_invalid_uuid) ... ok
+test_product_validation (test_product.ProductTests.test_product_validation) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.004s
+
+OK
