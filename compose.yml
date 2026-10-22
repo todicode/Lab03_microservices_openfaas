@@ -1,0 +1,68 @@
+name: lab03-openfaas
+services:
+  postgres:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/setup_env.py}
+      PRODUCT_DB_PASSWORD: ${PRODUCT_DB_PASSWORD:?Run python scripts/setup_env.py}
+      ORDER_DB_PASSWORD: ${ORDER_DB_PASSWORD:?Run python scripts/setup_env.py}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/postgres/init.sh:/docker-entrypoint-initdb.d/01-init.sh:ro
+      - ./infra/postgres/products.sql:/schemas/products.sql:ro
+      - ./infra/postgres/orders.sql:/schemas/orders.sql:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  product-service:
+    build: .
+    image: lab03/product-service:1.0.0
+    environment:
+      SERVICE_MODULE: product_service
+      DATABASE_URL: postgresql://product_app:${PRODUCT_DB_PASSWORD}@postgres:5432/product_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+  order-service:
+    build: .
+    image: lab03/order-service:1.0.0
+    environment:
+      SERVICE_MODULE: order_service
+      DATABASE_URL: postgresql://order_app:${ORDER_DB_PASSWORD}@postgres:5432/order_db
+      GATEWAY_URL: http://gateway:8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+  total-calculator:
+    build: .
+    image: lab03/total-calculator:1.0.0
+    environment:
+      SERVICE_MODULE: total_calculator
+    restart: unless-stopped
+  gateway:
+    image: nginx:1.28-alpine
+    volumes:
+      - ./infra/nginx/local.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - product-service
+      - order-service
+      - total-calculator
+    restart: unless-stopped
+  frontend:
+    image: nginx:1.28-alpine
+    ports:
+      - "127.0.0.1:8082:8080"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./infra/nginx/frontend.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - gateway
+    restart: unless-stopped
+volumes:
+  postgres-data:
+
