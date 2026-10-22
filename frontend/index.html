@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#254e3b"><title>Paperlane — Một góc nhỏ, nhiều cảm hứng</title>
+  <link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+ <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+ <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></symbol>
+ <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+ <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C8 2 2 10 7 16s14 0 13-12Z"/><path d="M4 21 16 9"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+ <symbol id="i-edit" viewBox="0 0 24 24"><path d="m15 4 5 5M4 20l5-1L21 7l-5-5L4 14v6Z"/></symbol>
+</svg>
+<div class="announcement">Những món đồ nhỏ, dành cho ý tưởng lớn.</div>
+<header class="header">
+ <a class="brand" href="#shop" aria-label="Paperlane trang chủ"><span class="brand-mark">p.</span> paperlane<span class="brand-dot">®</span></a>
+ <nav aria-label="Điều hướng chính">
+  <a href="#shop" data-nav="shop">Cửa hàng</a><a href="#orders" data-nav="orders">Đơn hàng</a><a href="#manage" data-nav="manage">Quản lý</a>
+ </nav>
+ <button class="cart-button" id="open-cart"><svg><use href="#i-bag"/></svg><span>Giỏ hàng</span><span id="cart-count" class="count">0</span></button>
+</header>
+<main id="main">
+ <section id="shop-view" class="view">
+  <div class="hero">
+   <div class="hero-copy"><p class="eyebrow"><span class="tiny-line"></span> FOR YOUR EVERYDAY IDEAS</p>
+    <h1>Một góc nhỏ.<br><em>Nhiều cảm hứng.</em></h1>
+    <p class="hero-description">Từ trang giấy đầu tiên đến những kế hoạch lớn.<br>Chọn một người bạn đồng hành cho mỗi ngày của bạn.</p>
+    <a class="primary link-button" href="#collection">Khám phá bộ sưu tập <svg><use href="#i-arrow"/></svg></a>
+    <div class="hero-note"><svg><use href="#i-leaf"/></svg> Đơn giản. Hữu ích. Được chọn bằng sự quan tâm.</div>
+   </div>
+   <div class="hero-art" aria-hidden="true">
+    <span class="art-label">THE EVERYDAY COLLECTION — 01</span><div class="art-orbit"></div>
+    <div class="hero-notebook"><span>PAPERLANE</span><strong>make room<br>for ideas.</strong><small>DOT GRID · 160 PAGES</small></div>
+    <div class="hero-pen"></div><div class="art-stamp">a little<br>inspiration<br><b>every day.</b></div>
+    <span class="art-caption">Được tạo nên cho những khởi đầu mới.</span>
+   </div>
+  </div>
+  <div class="benefits"><span><svg><use href="#i-check"/></svg> Thiết kế dành cho mỗi ngày</span><span><svg><use href="#i-check"/></svg> Giá rõ ràng, mua sắm dễ dàng</span><span><svg><use href="#i-check"/></svg> Thanh toán khi nhận hàng</span></div>
+  <section class="collection" id="collection" aria-labelledby="collection-title">
+   <div class="section-heading"><div><p class="eyebrow">SMALL THINGS, BIG POSSIBILITIES</p><h2 id="collection-title">Tìm cảm hứng của bạn<span>.</span></h2></div><span id="product-count" class="muted">Đang tải sản phẩm…</span></div>
+   <div class="catalog-tools"><div class="filters" aria-label="Danh mục sản phẩm">
+    <button class="filter active" data-category="all" aria-pressed="true">Tất cả</button><button class="filter" data-category="notebooks" aria-pressed="false">Sổ & kế hoạch</button><button class="filter" data-category="writing" aria-pressed="false">Bút viết</button><button class="filter" data-category="desk" aria-pressed="false">Góc làm việc</button><button class="filter" data-category="accessories" aria-pressed="false">Phụ kiện</button>
+   </div><div class="search-wrap"><svg><use href="#i-search"/></svg><input id="search" type="search" aria-label="Tìm sản phẩm" placeholder="Tìm một món đồ…"></div></div>
+   <div id="shop-error" class="error-box" hidden></div>
+   <div id="product-grid" class="product-grid" aria-live="polite"></div>
+  </section>
+  <section class="closing-note"><span class="mini-flower" aria-hidden="true">✳</span><div><p class="eyebrow">A FRESH PAGE, A FRESH START</p><h2>Mỗi ý tưởng hay đều bắt đầu<br>từ một điều rất nhỏ.</h2></div><a href="#collection" class="text-link">Chọn món đồ đầu tiên <svg><use href="#i-arrow"/></svg></a></section>
+ </section>
+ <section id="orders-view" class="view inner-page" hidden>
+  <p class="eyebrow">YOUR LITTLE COLLECTION</p><div class="section-heading"><h1>Đơn hàng<span>.</span></h1><button class="secondary" id="refresh-orders">Làm mới</button></div>
+  <p class="page-intro">Xem chi tiết và theo dõi những món đồ bạn đã chọn.</p>
+  <p class="demo-note">Bản thực hành local: danh sách đơn hàng dùng chung cho phiên demo.</p>
+  <div id="orders-content" aria-live="polite"></div>
+ </section>
+ <section id="manage-view" class="view inner-page" hidden>
+  <p class="eyebrow">THE STORE DESK</p><div class="section-heading"><h1>Quản lý sản phẩm<span>.</span></h1><button class="primary" id="new-product"><svg><use href="#i-plus"/></svg> Thêm sản phẩm</button></div>
+  <p class="page-intro">Chăm chút bộ sưu tập: thêm món mới, sửa thông tin hoặc ngừng bán.</p>
+  <p class="demo-note">Khu vực quản lý của bản demo local, chưa có đăng nhập/phân quyền.</p>
+  <div id="manage-content" aria-live="polite"></div>
+ </section>
+</main>
+<footer><a class="brand" href="#shop"><span class="brand-mark">p.</span> paperlane</a><p>Một chút chỉn chu cho mỗi ngày.</p><span>LAB 03 · PYTHON & OPENFAAS</span></footer>
+<div id="toast" role="status" class="toast" hidden></div>
+
+<dialog id="cart-dialog" class="cart-dialog" aria-labelledby="cart-title">
+ <div class="dialog-top"><div><p class="eyebrow">YOUR EVERYDAY ESSENTIALS</p><h2 id="cart-title">Giỏ hàng của bạn</h2></div><button class="icon-button close-dialog" aria-label="Đóng giỏ hàng"><svg><use href="#i-close"/></svg></button></div>
+ <div id="cart-items"></div><div id="cart-summary"></div>
+ <form id="checkout-form">
+  <h3>Thông tin nhận hàng</h3>
+  <label>Họ và tên<input name="customer_name" autocomplete="name" required maxlength="120"></label>
+  <div class="form-row"><label>Số điện thoại<input name="phone" type="tel" autocomplete="tel" required maxlength="30"></label><label>Hình thức thanh toán<input value="Khi nhận hàng (COD)" disabled></label></div>
+  <label>Địa chỉ nhận hàng<textarea name="address" autocomplete="street-address" required maxlength="500" rows="2"></textarea></label>
+  <label>Ghi chú <span class="muted">(không bắt buộc)</span><textarea name="note" maxlength="500" rows="2"></textarea></label>
+  <p class="form-hint">Tổng tiền cuối cùng được xác nhận theo giá hiện tại khi đặt hàng. Bản demo chưa tính phí vận chuyển.</p>
+  <p id="checkout-error" class="form-error" role="alert" hidden></p>
+  <button class="primary full-width" id="place-order" type="submit">Đặt hàng <svg><use href="#i-arrow"/></svg></button>
+ </form>
+</dialog>
+<dialog id="product-dialog" aria-labelledby="product-dialog-title">
+ <div class="dialog-top"><h2 id="product-dialog-title">Thêm sản phẩm</h2><button class="icon-button close-dialog" aria-label="Đóng chỉnh sửa"><svg><use href="#i-close"/></svg></button></div>
+ <form id="product-form">
+  <input type="hidden" name="id">
+  <label>Tên sản phẩm<input name="name" required maxlength="120"></label>
+  <div class="form-row"><label>Giá bán (VND)<input name="price_vnd" type="number" min="0" max="1000000000" step="1" required></label><label>Danh mục<select name="category"><option value="notebooks">Sổ & kế hoạch</option><option value="writing">Bút viết</option><option value="desk">Góc làm việc</option><option value="accessories">Phụ kiện</option></select></label></div>
+  <label>Mô tả<textarea name="description" maxlength="1000" rows="4"></textarea></label>
+  <label class="checkbox-label"><input name="active" type="checkbox" checked> Đang bán</label>
+  <p id="product-error" class="form-error" role="alert" hidden></p><button type="submit" class="primary full-width">Lưu sản phẩm</button>
+ </form>
+</dialog>
+<dialog id="order-dialog" aria-labelledby="order-dialog-title">
+ <div class="dialog-top"><h2 id="order-dialog-title">Chi tiết đơn hàng</h2><button class="icon-button close-dialog" aria-label="Đóng chi tiết"><svg><use href="#i-close"/></svg></button></div><div id="order-detail"></div>
+</dialog>
+</body></html>
