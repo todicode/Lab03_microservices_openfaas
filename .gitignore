@@ -13,3 +13,6 @@ evidence/*.log
 !.env.example
 node_modules/
 
+
+# Keep browser screenshots local; only publish reviewed text test results.
+evidence/*.png
