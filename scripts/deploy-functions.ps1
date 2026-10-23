@@ -1,4 +1,4 @@
-param([string]$Profile = "lab03-openfaas", [string]$Stack = ".generated/stack-public.yml")
+param([string]$Profile = "lab03-openfaas", [string]$Stack = "stack.yml")
 $ErrorActionPreference = "Stop"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 if (-not (Test-Path -LiteralPath $Stack)) { throw "Prepare/publish a public image stack first. See docs/OPENFAAS.md." }

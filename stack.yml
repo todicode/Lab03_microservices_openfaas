@@ -7,7 +7,7 @@ functions:
   product-service:
     lang: python3-http-debian
     handler: ./.generated/product-service
-    image: localhost:5000/lab03/product-service:1.0.0
+    image: docker.io/giabaonguyentran/lab03-product-service:1.0.0
     build_args:
       PYTHON_VERSION: "3.12"
     environment:
@@ -26,7 +26,7 @@ functions:
   order-service:
     lang: python3-http-debian
     handler: ./.generated/order-service
-    image: localhost:5000/lab03/order-service:1.0.0
+    image: docker.io/giabaonguyentran/lab03-order-service:1.0.0
     build_args:
       PYTHON_VERSION: "3.12"
     environment:
@@ -46,7 +46,7 @@ functions:
   total-calculator:
     lang: python3-http-debian
     handler: ./.generated/total-calculator
-    image: localhost:5000/lab03/total-calculator:1.0.0
+    image: docker.io/giabaonguyentran/lab03-total-calculator:1.0.0
     build_args:
       PYTHON_VERSION: "3.12"
     labels:
