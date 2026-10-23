@@ -43,6 +43,7 @@ Lệnh cuối tạm dừng và khôi phục Calculator/PostgreSQL của riêng p
 |---|---|
 | Unit test | 15/15 đạt |
 | API + PostgreSQL thật | 25/25 đạt |
+| API qua OpenFaaS Gateway | 25/25 đạt |
 | Lỗi phụ thuộc, phục hồi, lưu trữ và cách ly database | 7/7 đạt |
 | Thao tác giao diện | Đặt hàng thành công; tạo sản phẩm ngừng bán thành công |
 
@@ -55,9 +56,18 @@ Xem [evidence/local-api.json](evidence/local-api.json), [evidence/local-resilien
 - Function: template chính thức `python3-http-debian`, cùng logic với bản local.
 - PostgreSQL: StatefulSet + PVC, dữ liệu nằm ngoài container function.
 - Secret kết nối database được gắn thành file, không đưa vào image.
-- Gateway dự kiến: `http://127.0.0.1:18080`; frontend Kubernetes: `http://127.0.0.1:8084`.
+- Gateway: `http://127.0.0.1:18080`; frontend Kubernetes: `http://127.0.0.1:8084`.
 
-**Trạng thái hiện tại:** hạ tầng OpenFaaS, PostgreSQL và frontend Kubernetes đã cài; image function đã build. CE từ chối registry nội bộ vì yêu cầu image public. Bước upload image public và nghiệm thu function trên OpenFaaS đang chờ cho phép, chưa được tính là đã đạt.
+**Đã nghiệm thu ngày 23/10/2026:** ba image public trên Docker Hub đã được triển khai thành công. Ba function Running và Ready; PVC PostgreSQL Bound 1 GiB; API qua Gateway đạt 25/25. Xem [kết quả OpenFaaS](evidence/openfaas-api.json), [trạng thái cụm](evidence/report-status.json) và [kiểm tra image public](evidence/dockerhub-public.json).
+
+Chạy lại trên máy đã cài đặt, sau khi Docker Desktop sẵn sàng:
+
+```powershell
+minikube start -p lab03-openfaas --keep-context
+.\scripts\forward-demo.ps1
+```
+
+Mở **http://127.0.0.1:8084** để dùng bản OpenFaaS.
 
 Cổng 8080 của máy này đang được IIS sử dụng, vì vậy Gateway dùng 18080.
 
@@ -66,6 +76,7 @@ Cổng 8080 của máy này đang được IIS sử dụng, vì vậy Gateway d�
 - [Thiết kế và danh sách API](docs/API.md)
 - [Cài đặt/triển khai OpenFaaS](docs/OPENFAAS.md)
 - [Báo cáo bài lab](docs/BAO_CAO.md)
+- Bản Word kèm 8 ảnh minh chứng: `reports/Bao_cao_Lab03_OpenFaaS.docx` (giữ cục bộ để kiểm tra, không đưa lên GitHub).
 - [Kịch bản demo](docs/DEMO.md)
 - [Postman collection](postman/Lab03.postman_collection.json)
 

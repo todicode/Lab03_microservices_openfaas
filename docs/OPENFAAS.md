@@ -48,25 +48,27 @@ CE tại thời điểm làm lab từ chối image registry nội bộ với th�
 
 > the Community Edition license agreement only allows public images
 
-Có thể dùng registry public do bạn quản lý, rồi thay ba trường `image` trong stack. Hoặc dùng registry demo ttl.sh:
+Dùng ba repository public Docker Hub của tài khoản `giabaonguyentran`, tag `1.0.0`. Các trường image trong `stack.yml` đã trỏ đúng repository:
 
 ```powershell
 # Chỉ xem kế hoạch, chưa upload:
-.\scripts\publish-demo.ps1
+.\scripts\publish-images.ps1
 
 # Chỉ chạy khi bạn đồng ý công khai các image:
-.\scripts\publish-demo.ps1 -Push
+.\scripts\publish-images.ps1 -Push
 ```
 
-Image ttl.sh có thể được người khác tải và hết hạn sau 24 giờ. Secret/database không đi cùng image. Script tạo stack mới trong `.generated/stack-public.yml`; không đưa credential vào Git.
-
-Sau khi image hết hạn, build/publish lại rồi deploy stack mới. Container đang chạy có thể vẫn phục vụ, nhưng việc tạo lại pod cần image còn tải được.
-
-**Bước publish chưa được thực hiện trong phiên hiện tại vì đang chờ cho phép.**
+Các repository là `lab03-product-service`, `lab03-order-service` và `lab03-total-calculator`. Secret/database không đi cùng image. Bước publish đã hoàn tất với sự cho phép công khai của chủ project. Script `check_public_images.py` xác minh tải manifest không đăng nhập; kết quả trong `evidence/dockerhub-public.json`.
 
 ## 5. Mở cổng Gateway và frontend
 
-Mở hai terminal riêng, giữ các lệnh này chạy:
+Cách nhanh, script mở hai tiến trình ẩn và kiểm tra HTTP:
+
+```powershell
+.\scripts\forward-demo.ps1
+```
+
+Hoặc mở hai terminal riêng, giữ các lệnh này chạy:
 
 ```powershell
 kubectl --context lab03-openfaas -n openfaas port-forward --address=127.0.0.1 svc/gateway 18080:8080
@@ -106,6 +108,6 @@ Mật khẩu PostgreSQL trong `.env` phải được giữ lại khi dùng PVC c
 
 ## 8. Trạng thái nghiệm thu
 
-Đã cài OpenFaaS CE, database/PVC và frontend; đã build image từ template. Ba function **chưa được triển khai thành công** do bước public image đang chờ cho phép. Chỉ bổ sung kết quả OpenFaaS sau khi chạy API test thực tế.
+Ngày 23/10/2026: ba image Docker Hub public đã deploy thành công; cả ba function Running và Ready; PVC Bound 1 GiB. Bộ kiểm thử qua Gateway thực tế đạt **25/25**; phép tính 2 × 129.000 + 35.000 trả 293.000 VND. Đã thao tác frontend Kubernetes để đặt/hủy đơn và tạo sản phẩm. Xem `evidence/openfaas-api.json`, `evidence/report-status.json` và báo cáo Word cục bộ trong `reports/`.
 
 Tài liệu tham khảo: [Python](https://docs.openfaas.com/languages/python/), [workloads](https://docs.openfaas.com/reference/workloads/), [secrets](https://docs.openfaas.com/reference/secrets/), [CLI trong Docker](https://docs.openfaas.com/cli/install/#running-faas-cli-with-docker).

@@ -3,7 +3,9 @@
 - Sinh viên: ........................................
 - MSSV: .............................................
 - Lớp: ..............................................
-- Ngày thực hiện/kiểm thử: 22/10/2026.
+- Ngày hoàn tất kiểm thử: 23/10/2026.
+
+Bản Word có ảnh minh chứng thực tế được lưu cục bộ tại `reports/Bao_cao_Lab03_OpenFaaS.docx`.
 
 ## 1. Mục tiêu
 
@@ -108,7 +110,8 @@ Secret database được gắn thành file trong function. Image không chứa m
 
 - faas-cli Windows hiểu đường dẫn ổ D: như URL scheme. Xử lý bằng CLI Linux chính thức trong Docker để tạo build context.
 - Cổng 8080 đã do IIS sử dụng. Chọn localhost:18080 cho Gateway.
-- OpenFaaS CE từ chối image registry nội bộ và yêu cầu image public. Script chuẩn bị phương án ttl.sh 24 giờ; upload đang chờ cho phép.
+- OpenFaaS CE trong môi trường này từ chối image registry nội bộ và yêu cầu image public. Đã đẩy ba image lên Docker Hub public, tag 1.0.0, tài khoản giabaonguyentran; kiểm tra manifest không đăng nhập thành công.
+- Font tiếng Việt được đóng gói cục bộ. ConfigMap assets dùng server-side apply để tránh giới hạn annotation.
 
 ## 8. Kết quả kiểm thử thực tế
 
@@ -118,13 +121,13 @@ Secret database được gắn thành file trong function. Image không chứa m
 | API với PostgreSQL thật | 25 | Đạt |
 | Lỗi/phục hồi và cách ly database | 7 | Đạt |
 | Giao diện | Đặt hàng, tạo sản phẩm ngừng bán | Đạt |
-| Function trên OpenFaaS | Chưa nghiệm thu | Chờ publish image public |
+| API qua OpenFaaS Gateway | 25 | Đạt |
+| Function trên OpenFaaS | 3 | Running và Ready |
+| Docker Hub tải public | 3 | Đạt |
 
 Các kiểm tra đáng chú ý: hai request đồng thời chỉ tạo một đơn; giá do client sửa không được dùng; đổi giá sản phẩm không đổi đơn cũ; đơn còn nguyên sau khi PostgreSQL khởi động lại; tài khoản Product không kết nối được Order DB và ngược lại.
 
-Minh chứng: ../evidence/local-api.json, ../evidence/local-resilience.json Ảnh checkout được giữ cục bộ trong evidence/checkout-success.png, không upload lên repository.
-
-Ảnh minh chứng cục bộ: evidence/checkout-success.png.
+Minh chứng: `evidence/local-api.json`, `evidence/local-resilience.json`, `evidence/openfaas-api.json`, `evidence/report-status.json` và `evidence/dockerhub-public.json`. Tám ảnh frontend Kubernetes được giữ cục bộ trong `evidence/report-shots/` và đưa vào bản Word, không upload lên repository.
 
 ## 9. Giới hạn và hướng phát triển
 
@@ -134,7 +137,7 @@ Mở rộng có thể gồm xác thực, quyền quản trị, thanh toán sandb
 
 ## 10. Kết luận
 
-Đã xây dựng và kiểm thử ứng dụng ba service Python, đóng gói container và chuẩn bị/cài hạ tầng OpenFaaS trên Kubernetes. Việc nghiệm thu ba function qua OpenFaaS chưa hoàn tất vì bước upload image public đang chờ cho phép. Báo cáo cần cập nhật phần này sau khi có kết quả thực tế, không suy diễn từ kết quả Compose.
+Đã xây dựng, đóng gói và triển khai thành công ba service Python trên OpenFaaS CE trong Kubernetes. Ba function đều Ready; API qua Gateway đạt 25/25. Frontend thực hiện được luồng mua hàng, xem và hủy đơn, quản lý sản phẩm. PVC PostgreSQL Bound 1 GiB; dữ liệu và secret được tách khỏi image function.
 
 ## Tài liệu tham khảo
 

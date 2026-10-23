@@ -3,8 +3,8 @@
 ## Chuẩn bị
 
 - Khởi động Docker Desktop.
-- Chạy `scripts/start-local.ps1`, mở http://127.0.0.1:8082.
-- Nếu đã hoàn tất triển khai OpenFaaS, mở hai port-forward theo OPENFAAS.md và dùng http://127.0.0.1:8084.
+- Chạy `minikube start -p lab03-openfaas --keep-context`, sau đó `scripts/forward-demo.ps1` và mở http://127.0.0.1:8084 để demo bản OpenFaaS đã triển khai.
+- Bản local riêng có thể chạy bằng `scripts/start-local.ps1`, cổng 8082.
 - Import Postman collection trong thư mục postman; đặt biến base_url tương ứng.
 - Dữ liệu local và Kubernetes là hai bộ riêng, không tự đồng bộ.
 
@@ -52,7 +52,7 @@ Trình bày evidence/local-api.json (25 kiểm tra) và evidence/local-resilienc
 
 Chỉ chạy test_resilience.py khi ngừng thao tác trên giao diện vì script cố ý tạm dừng service/database.
 
-## 6. Minh chứng OpenFaaS (sau khi deploy thành công)
+## 6. Minh chứng OpenFaaS
 
 ```powershell
 .\.tools\faas-cli.exe list --gateway http://127.0.0.1:18080
