@@ -15,6 +15,6 @@ test_invalid_uuid (test_product.ProductTests.test_invalid_uuid) ... ok
 test_product_validation (test_product.ProductTests.test_product_validation) ... ok
 
 ----------------------------------------------------------------------
-Ran 15 tests in 0.004s
+Ran 15 tests in 0.003s
 
 OK

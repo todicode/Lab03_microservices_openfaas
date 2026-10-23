@@ -1,0 +1,17 @@
+[
+  {
+    "image": "docker.io/giabaonguyentran/lab03-product-service:1.0.0",
+    "anonymous_pull": true,
+    "digest": "sha256:76692ebe2a4c96c257949afb8c6896f10aa2eb61029aa2467a6f9c30f85fb4dc"
+  },
+  {
+    "image": "docker.io/giabaonguyentran/lab03-order-service:1.0.0",
+    "anonymous_pull": true,
+    "digest": "sha256:802a01b2b10c02d31438e666562fb74d0d3d0ba08589da86b2dbcd1aa53c6aa3"
+  },
+  {
+    "image": "docker.io/giabaonguyentran/lab03-total-calculator:1.0.0",
+    "anonymous_pull": true,
+    "digest": "sha256:4104151a87992aefdf24f9c3f204ced4ade666b275b855a50ef55ac2996428ed"
+  }
+]

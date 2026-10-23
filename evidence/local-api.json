@@ -1,6 +1,6 @@
 {
   "base_url": "http://127.0.0.1:8082",
-  "timestamp_utc": "2026-10-22T08:03:27Z",
+  "timestamp_utc": "2026-10-23T03:38:31Z",
   "checks": [
     {
       "name": "product-service healthy",

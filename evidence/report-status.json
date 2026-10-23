@@ -1,0 +1,69 @@
+{
+  "timestamp_utc": "2026-10-23T09:19:07.669637+00:00",
+  "context": "lab03-openfaas",
+  "kubernetes": "v1.35.0",
+  "functions": [
+    {
+      "name": "order-service-6c566898ff-4sp5r",
+      "phase": "Running",
+      "ready": true,
+      "image": "docker.io/giabaonguyentran/lab03-order-service:1.0.0",
+      "restarts": 1
+    },
+    {
+      "name": "product-service-787b8cd4f7-74dkb",
+      "phase": "Running",
+      "ready": true,
+      "image": "docker.io/giabaonguyentran/lab03-product-service:1.0.0",
+      "restarts": 1
+    },
+    {
+      "name": "total-calculator-5bb5dcd959-stdrw",
+      "phase": "Running",
+      "ready": true,
+      "image": "docker.io/giabaonguyentran/lab03-total-calculator:1.0.0",
+      "restarts": 1
+    }
+  ],
+  "pvc": {
+    "name": "data-postgres-0",
+    "phase": "Bound",
+    "capacity": "1Gi"
+  },
+  "calculator": {
+    "input": {
+      "items": [
+        {
+          "unit_price_vnd": 129000,
+          "quantity": 2
+        },
+        {
+          "unit_price_vnd": 35000,
+          "quantity": 1
+        }
+      ]
+    },
+    "http_status": 200,
+    "output": {
+      "currency": "VND",
+      "items": [
+        {
+          "line_total_vnd": 258000,
+          "quantity": 2,
+          "unit_price_vnd": 129000
+        },
+        {
+          "line_total_vnd": 35000,
+          "quantity": 1,
+          "unit_price_vnd": 35000
+        }
+      ],
+      "total_vnd": 293000
+    }
+  },
+  "demo_order": {
+    "id": "93b43113-8b28-4f40-a19b-cf0e5ff1c18f",
+    "total_vnd": 293000,
+    "status": "cancelled"
+  }
+}

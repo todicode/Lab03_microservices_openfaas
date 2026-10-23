@@ -1,0 +1,108 @@
+{
+  "base_url": "http://127.0.0.1:18080",
+  "timestamp_utc": "2026-10-23T03:38:32Z",
+  "checks": [
+    {
+      "name": "product-service healthy",
+      "passed": true
+    },
+    {
+      "name": "order-service healthy",
+      "passed": true
+    },
+    {
+      "name": "total-calculator healthy",
+      "passed": true
+    },
+    {
+      "name": "Seed products available",
+      "passed": true
+    },
+    {
+      "name": "Create product",
+      "passed": true
+    },
+    {
+      "name": "Read product",
+      "passed": true
+    },
+    {
+      "name": "Search product",
+      "passed": true
+    },
+    {
+      "name": "Update product",
+      "passed": true
+    },
+    {
+      "name": "Reject invalid price",
+      "passed": true
+    },
+    {
+      "name": "Calculator exact VND total",
+      "passed": true
+    },
+    {
+      "name": "Concurrent retry creates exactly one order",
+      "passed": true
+    },
+    {
+      "name": "Concurrent responses share order ID",
+      "passed": true
+    },
+    {
+      "name": "Server ignores client price",
+      "passed": true
+    },
+    {
+      "name": "Idempotency replay",
+      "passed": true
+    },
+    {
+      "name": "Reject reused key with changed payload",
+      "passed": true
+    },
+    {
+      "name": "Order preserves purchase price",
+      "passed": true
+    },
+    {
+      "name": "Order appears in list",
+      "passed": true
+    },
+    {
+      "name": "Cancel pending order",
+      "passed": true
+    },
+    {
+      "name": "Reject second cancellation",
+      "passed": true
+    },
+    {
+      "name": "Deactivate product",
+      "passed": true
+    },
+    {
+      "name": "Inactive product hidden",
+      "passed": true
+    },
+    {
+      "name": "Reject ordering inactive product",
+      "passed": true
+    },
+    {
+      "name": "Reject malformed JSON",
+      "passed": true
+    },
+    {
+      "name": "Unknown path returns 404",
+      "passed": true
+    },
+    {
+      "name": "Unsupported method returns 405",
+      "passed": true
+    }
+  ],
+  "passed": 25,
+  "total": 25
+}
